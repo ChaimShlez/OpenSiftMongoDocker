@@ -1,0 +1,23 @@
+
+oc apply -f mysql.yaml
+
+docker build -t data_loader .
+docker login
+docker tag data_loader chaim022/data_loader:11
+docker push chaim022/data_loader
+
+oc apply -f data_loader.yaml
+
+oc rsh <pod>
+mysql -u root -p
+use my_db
+CREATE TABLE students ( id INT  AUTO_INCREMENT,first_name VARCHAR(20) 	NOT NULL,   last_name VARCHAR(20) 	NOT NULL,   PRIMARY KEY (id) );  
+);
+
+
+INSERT INTO students (first_name ,last_name)VALUES ("chaim" ,"shlez");
+
+INSERT INTO students (first_name ,last_name)VALUES ("dan" ,"shachar");
+INSERT INTO students (first_name ,last_name)VALUES ("avi" ,"levi");
+INSERT INTO students (first_name ,last_name)VALUES ("idan" ,"shay");
+INSERT INTO students (first_name ,last_name)VALUES ("yaniv" ,"adar");
