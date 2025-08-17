@@ -14,7 +14,11 @@ class ConnectionWrapper:
         self.db = self.client[os.getenv("MONGODB_DATABASE")]
 
     def get_all(self, collection_name):
-
+        print(os.getenv("MONGODB_HOST"))
+        print(os.getenv("MONGODB_PORT"))
+        print(os.getenv("MONGODB_USER"))
+        print(os.getenv("MONGODB_PASSWORD"))
+        print(os.getenv("MONGODB_DATABASE"))
         try:
             collection = self.db[collection_name]
             return list(collection.find({}))
