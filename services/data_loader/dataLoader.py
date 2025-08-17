@@ -21,7 +21,8 @@ class ConnectionWrapper:
         print(os.getenv("MONGODB_DATABASE"))
         try:
             collection = self.db[collection_name]
-            return list(collection.find())
+            return collection.find_one()
+
 
         except Exception as e:
             print(f"MongoDB get_all error: {e}")
