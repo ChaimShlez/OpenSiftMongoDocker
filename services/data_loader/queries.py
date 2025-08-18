@@ -8,7 +8,7 @@ class Queries:
 
 
     def getAll(self):
-        res = self._connection.get_all("customer")
+        res = self._connection.get_all("users")
         return res
 
 
