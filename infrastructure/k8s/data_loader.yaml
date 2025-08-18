@@ -15,21 +15,19 @@ spec:
       containers:
       - name: data-loader
         image: chaim022/data_loader:11
-
         ports:
         - containerPort: 8000
         env:
-        - name: DB_HOST
-          value: mysql
-        - name: DB_USER
-          value: root
-        - name: DB_PASSWORD
-          value: root_password
-        - name: DB_NAME
-          value: my_db
-
-
-
+        - name: MONGODB_HOST
+          value: mongodb
+        - name: MONGODB_PORT
+          value: "27017"
+        - name: MONGODB_USER
+          value: admin
+        - name: MONGODB_PASSWORD
+          value: secretpassword
+        - name: MONGODB_DATABASE
+          value: mydb
 
 ---
 apiVersion: v1
