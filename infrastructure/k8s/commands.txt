@@ -1,23 +1,25 @@
 
-oc apply -f mysql.yaml
+ oc apply -f mongodb.yaml
 
-docker build -t data_loader .
-docker login
-docker tag data_loader chaim022/data_loader:11
-docker push chaim022/data_loader
 
+mongosh -u admin -p secretpassword --authenticationDatabase admin mydb
+db.users.insert([
+  { "_id": 1, "name": "John", "address": "Highway 37"},
+  { "_id": 2, "name": "Peter", "address": "Lowstreet 27"},
+  { "_id": 3, "name": "Amy", "address": "Apple st 652"},
+  { "_id": 4, "name": "Hannah", "address": "Mountain 21"},
+  { "_id": 5, "name": "Michael", "address": "Valley 345"},
+  { "_id": 6, "name": "Sandy", "address": "Ocean blvd 2"},
+  { "_id": 7, "name": "Betty", "address": "Green Grass 1"},
+  { "_id": 8, "name": "Richard", "address": "Sky st 331"},
+  { "_id": 9, "name": "Susan", "address": "One way 98"},
+  { "_id": 10, "name": "Vicky", "address": "Yellow Garden 2"},
+  { "_id": 11, "name": "Ben", "address": "Park Lane 38"},
+  { "_id": 12, "name": "William", "address": "Central st 954"},
+  { "_id": 13, "name": "Chuck", "address": "Main Road 989"},
+  { "_id": 14, "name": "Viola", "address": "Sideway 1633"}
+])
+db.users.find().pretty()
+docker tag data_loader chaim022/data_loader_mongo:4
+docker push chaim022/data_loader_mongo
 oc apply -f data_loader.yaml
-
-oc rsh <pod>
-mysql -u root -p
-use my_db
-CREATE TABLE students ( id INT  AUTO_INCREMENT,first_name VARCHAR(20) 	NOT NULL,   last_name VARCHAR(20) 	NOT NULL,   PRIMARY KEY (id) );  
-);
-
-
-INSERT INTO students (first_name ,last_name)VALUES ("chaim" ,"shlez");
-
-INSERT INTO students (first_name ,last_name)VALUES ("dan" ,"shachar");
-INSERT INTO students (first_name ,last_name)VALUES ("avi" ,"levi");
-INSERT INTO students (first_name ,last_name)VALUES ("idan" ,"shay");
-INSERT INTO students (first_name ,last_name)VALUES ("yaniv" ,"adar");

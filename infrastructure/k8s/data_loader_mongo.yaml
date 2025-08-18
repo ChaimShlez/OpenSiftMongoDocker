@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: data-loader
+  name: data-loader-mongo
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: data-loader
+      app: data-loader-mongo
   template:
     metadata:
       labels:
-        app: data-loader
+        app: data-loader-mongo
     spec:
       containers:
-      - name: data-loader
-        image: chaim022/data_loader:11
+      - name: data-loader-mongo
+        image: chaim022/data_loader_mongo:4
         ports:
         - containerPort: 8000
         env:
@@ -33,10 +33,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: data-loader
+  name: data-loader-mongo
 spec:
   selector:
-    app: data-loader
+    app: data-loader-mongo
   ports:
   - port: 8000
     targetPort: 8000
