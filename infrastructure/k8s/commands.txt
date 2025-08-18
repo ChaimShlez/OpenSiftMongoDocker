@@ -20,6 +20,46 @@ db.users.insert([
   { "_id": 14, "name": "Viola", "address": "Sideway 1633"}
 ])
 db.users.find().pretty()
+
+docker build -t data_loader .
 docker tag data_loader chaim022/data_loader_mongo:4
 docker push chaim022/data_loader_mongo
 oc apply -f data_loader.yaml
+
+
+
+
+
+without yamls file-------------
+
+
+cat << EOF | oc apply -f -
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc-new-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+EOF
+
+
+
+c new-app --docker-image=docker.io/library/mongo:7.0.23 --name=mongodbnewapp -e
+MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=secretpassword -e MONGO_INITDB_DATABASE=mydb
+
+oc set volume deployment/mongodb --add  --name=my-storage --mount-path=/data/mongodb --claim-name=my-pvc
+
+
+oc new-app https://github.com/ChaimShlez/OpenSiftMongoDocker.git  --name=appmongonewapp  -e MONGODB_HOST=mongodb  -e MONGODB_PORT=27017 -e
+ MONGODB_USER=admin -e MONGODB_PASSWORD=secretpassword  -e MONGODB_DATABASE=mydb
+
+
+
+
+
+
